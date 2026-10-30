@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<robot name="Nav2bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- ========================================= -->
+    <!-- INCLUDES - Bring all necessary components -->
+    <!-- =========================================-->
+
+    <!-- Include common properties of the differential robot. -->
+    <xacro:include filename="$(find robot_description)/urdf/components/robot_structure/common_properties.xacro"/>
+
+    <!-- Include the mobile base of the differential robot. -->
+    <xacro:include filename="$(find robot_description)/urdf/components/robot_structure/mobile_base.xacro"/>
+
+    <!-- sensor -->
+    <xacro:include filename="$(find robot_description)/urdf/components/imu/mpu6050.urdf.xacro"/>
+
+    <!-- =================================== -->
+    <!-- Structure of the complete robot -->
+    <!-- ===================================-->
+    
+    <!-- 
+    The mobile_base.xacro automatically creates:
+    - base_footprint (reference link)
+    - base_link (main robot body)
+    - left_wheel_link, right_wheel_link (wheels)
+    - caster_wheel_link 
+    -->
+
+    <!-- 
+        xyz: position relative to the robot's base_link
+            x: forward/backward (positive = forward)
+            y: left/right (positive = left)
+            z: up/down (positive = up)
+            rpy: orientation (roll, pitch, yaw in radians)
+    -->
+
+     <!-- IMU (stable position, near the center of mass) -->
+    <xacro:sensor_mpu6050 parent="base_link" name="imu">
+        <origin xyz="0.0 0.0245 0.18" rpy="0.0 0.0 0.0"/>
+    </xacro:sensor_mpu6050>
+   
+</robot>

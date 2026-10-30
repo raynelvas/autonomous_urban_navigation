@@ -1,0 +1,24 @@
+jetson_health_monitor:
+  ros__parameters:
+    # Umbrales de Temperatura (°C)
+    soc_warn: 75.0
+    soc_crit: 85.0
+    
+    # Umbrales de Voltaje (V)
+    vin_warn: 4.85
+    vin_crit: 4.75
+    
+    # Umbrales de RAM (%)
+    ram_warn: 70.0
+    ram_crit: 90.0
+    
+    # Umbrales de CPU (%)
+    cpu_warn: 99.0
+    cpu_crit: 100.0
+    
+    # Umbrales de Ventilador (%)
+    fan_warn: 80.0
+    fan_crit: 90.0
+    
+    # Configuración de muestreo
+    update_period: 1.0  # segundos

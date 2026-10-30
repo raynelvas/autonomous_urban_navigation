@@ -1,0 +1,48 @@
+lane_controller_nmpc:
+  ros__parameters:
+    # NMPC Config
+    N: 15
+    dt: 0.033
+    v_ref: 1.5
+    k_curve: 3.5
+
+    # Pesos (Weights)
+    Q_ey: 5.0
+    Q_epsi: 18.0
+    R_accel: 1.0
+    R_omega: 10.0
+    S_accel: 2.0
+    S_omega: 10.0
+    W_v_follow: 5.0
+    Q_terminal: 15.0
+
+    # Límites físicos
+    max_lin_accel: 0.3
+    decel_vision: 10.0
+    decel_system: 0.3
+    decel_safe_stop: 1.0
+    v_max: 1.7
+    w_max: 0.6
+    min_v_start: 0.1
+    max_v_start: 0.2
+
+# N: si reacciona tarde en curvas -> aumentar
+# dt: si vibra o es inestable -> bajar ligeramente
+# v_ref: velocidad crucero en rectas
+
+# ================= PESOS =================
+# Q_ey: subir si se abre en curvas / bajar si oscila lateralmente
+
+# Q_epsi: subir si entra torcido a curvas / bajar si gira demasiado agresivo
+
+# R_accel: subir si acelera/frena brusco
+
+# R_omega: subir si satura mucho ω / bajar si no gira suficiente
+
+# S_accel: subir si hay tirones entre pasos (jerk longitudinal)
+
+# S_omega: subir si vibra el giro / bajar si responde lento
+
+# W_v_follow: subir si entra muy rápido en curvas
+
+# Q_terminal: subir si corrige muy tarde dentro del horizonte
