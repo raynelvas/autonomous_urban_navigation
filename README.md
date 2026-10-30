@@ -12,9 +12,13 @@ Autonomous navigation and control system developed in **ROS 2 Humble** for a dif
 ---
 
 ## Authors
-
 * **Luis Raynel Vasquez Quishpe**  
   *Email:* luchitov2001@gmail.com
+* Douglas Vinueza
+* Jhoanna Benitez
+* Jonathan Naranjo
+* Cesar Villacis
+* David Loza-Matovelle
 
 <p align="center">
   <img src="multimedia/NEXUS.jpeg" alt="NEXUS" width="300"/>
@@ -164,4 +168,6 @@ trtexec --onnx=twinlite_512x288_lines_v2.onnx --saveEngine=twinlite_v2_RTX4060.e
   <img src="multimedia/segmentation.jpg" alt="segmentation" width="400"/>
 </p>
 
+### Derivation of the kinematic model.
+The development of the cinematic model is found in [this PDF](equation_eng.pdf)
 ---
