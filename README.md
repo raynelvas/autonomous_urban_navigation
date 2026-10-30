@@ -8,9 +8,14 @@ Autonomous navigation and control system developed in **ROS 2 Humble** for a dif
 > **Note:** This branch presents slight changes compared to the `main` branch. The main modifications are oriented toward the Jetson within ROS 2, and include sending the image directly instead of a compressed image.
 
 ---
-## Author
+## Authors
 * **Luis Raynel Vasquez Quishpe**  
   *Email:* luchitov2001@gmail.com
+* Douglas Vinueza
+* Jhoanna Benitez
+* Jonathan Naranjo
+* Cesar Villacis
+* David Loza-Matovelle
 
 <p align="center">
   <img src="multimedia/NEXUS.jpeg" alt="NEXUS" width="300"/>
