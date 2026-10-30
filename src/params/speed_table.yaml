@@ -1,0 +1,27 @@
+ipm_object:
+  ros__parameters:
+    # Tabla de velocidades por clase
+    # Estructura por cada clase:
+    # [peligro_d_min, peligro_d_max, peligro_v_min, peligro_ocupancia_min, prec_d_min, prec_d_max, prec_v_min]
+    
+    speed_configs:
+      class_0: [3.0, 8.0, 0.0, 0.001, 3.0, 12.0, 0.5]   # PERSON
+      class_1: [3.0, 10.0, 0.0, 0.001, 3.0, 12.0, 0.6]  # BICYCLE
+      class_2: [4.0, 10.0, 0.0, 0.15, 3.0, 12.0, 0.5]   # CAR
+      class_3: [4.0, 10.0, 0.0, 0.001, 4.0, 12.0, 0.5]   # MOTORCYCLE
+      class_4: [4.0, 10.0, 0.0, 0.40, 3.0, 15.0, 0.7]  # BUS
+      class_5: [4.0, 10.0, 0.0, 0.40, 3.0, 15.0, 0.7]  # TRUCK
+      
+      # Infraestructura (Usamos solo los primeros 3 valores para la rampa, los demás en 0)
+      class_6: [2.0, 7.0, 0.3, 0.001, 0.0, 0.0, 0.0]    # SPEED BUMP
+      class_7: [2.0, 10.0, 0.3, 0.001, 0.0, 0.0, 0.0]    # CROSSWALK
+      
+      # Señalética (Velocidad mínima constante si se detecta)
+      class_8: [0.0, 0.0, 0.9, 0.001, 0.0, 0.0, 0.0]    # SIGNAGE BUMP
+      class_9: [0.0, 0.0, 0.9, 0.001, 0.0, 0.0, 0.0]    # SIGNAGE CROSSWALK
+    
+    temporal_config:
+      threshold_confirm: 3
+      max_miss_frames: 2
+      dist_threshold: 0.8
+      inconsistency_threshold: 2

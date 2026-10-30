@@ -1,0 +1,6 @@
+supervisor_voltage:
+  ros__parameters:
+    battery_12v_min: 11.0
+    battery_12v_max: 13.0
+    battery_percentage_min: 20.0
+    battery_percentage_limit: 30.0

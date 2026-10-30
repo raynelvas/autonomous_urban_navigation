@@ -1,0 +1,14 @@
+detect_node:
+  ros__parameters:
+    class_thresholds: [
+      0.45, #person 
+      0.50, #bicycle
+      0.50, #car
+      0.45, #motorcycle
+      0.40, #bus    
+      0.35, #truck
+      0.35, #speed_bump
+      0.35, #crosswalk
+      0.35, #speed_bump_signage
+      0.35] #crosswalk_signage
+

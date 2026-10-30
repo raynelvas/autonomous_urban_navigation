@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot name="sensor_mpu6050" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Incluir materiales si existen, sino definir básicos -->
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+
+  <xacro:macro name="sensor_mpu6050" params="name parent *origin">
+    
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <parent link="${parent}"/>
+      <child link="${name}_link"/>
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.001"/>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <!-- Tamaño realista de MPU6050 (16x12x2mm) -->
+          <box size="0.016 0.012 0.002"/>
+        </geometry>
+        <material name="green"/>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+          <box size="0.016 0.012 0.002"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- ====================================================
+                      Gazebo Plugin (OPCIONAL)
+      Solo si usas Gazebo para simulación
+    ========================================================= -->
+    <!-- 
+    <gazebo>
+      <plugin name="${name}_controller" filename="libgazebo_ros_imu.so">
+        <topicName>${name}/data</topicName>
+        <bodyName>${name}_link</bodyName>
+        <updateRate>100</updateRate>
+        <gaussianNoise>0.005</gaussianNoise>
+      </plugin>
+    </gazebo>
+    -->
+
+  </xacro:macro>
+</robot>

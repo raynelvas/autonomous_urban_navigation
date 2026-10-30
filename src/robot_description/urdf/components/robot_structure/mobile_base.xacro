@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <!-- ================================================== -->
+    <!-- PARÁMETROS DIMENSIONALES DEL ROBOT -->
+    <!-- ================================================== -->
+    
+    <!-- Dimensiones del chasis principal [metros] -->
+    <xacro:property name="base_length" value="0.7"/>      <!-- Largo del chasis (100cm) -->
+    <xacro:property name="base_width" value="0.651"/>        <!-- Ancho del chasis (50cm) -->
+    <xacro:property name="base_height" value="0.37"/>       <!-- Altura del chasis (30cm) -->
+    
+    <!-- Dimensiones de las ruedas [metros] -->
+    <xacro:property name="wheel_radius" value="0.165"/>      <!-- Radio de cada rueda (10cm) -->
+    <xacro:property name="wheel_length" value="0.09"/>     <!-- Grosor/ancho de rueda (5cm) -->
+    
+    <!-- Posicionamiento de ruedas [metros] -->
+    <xacro:property name="wheel_y_offset" value="${base_width / 2.0 + wheel_length / 2 + 0.04}"/>  <!-- Distancia desde centro a rueda (4.85cm) -->
+    <xacro:property name="wheel_x_offset" value="0.24"/> <!-- Desplazamiento longitudinal (20cm) -->
+    <xacro:property name="wheel_z_offset" value="0.05"/>
+
+    <!-- ================================================== -->
+    <!-- ESTRUCTURA PRINCIPAL DEL ROBOT -->
+    <!-- ================================================== -->
+    
+    <!-- Frame de referencia en el suelo -->
+    <link name="base_footprint"/>
+
+    <!-- Chasis principal del robot -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}"/>
+            </geometry>
+            <!-- Posición: centro del chasis a la mitad de su altura -->
+            <origin xyz="0 0 ${base_height / 2.0 }" rpy="0 0 0"/>
+            <material name="white"/>
+        </visual>
+        <!-- Propiedades de inercia para simulación física -->
+        <!-- m: masa [kg], l/w/h: dimensiones [m], xyz: centro de masa, rpy: orientación -->
+        <xacro:box_inertia m="5.0" l="${2*base_length}" w="${2*base_width}" h="${2*base_height}"
+         xyz="0 0 ${2*base_height / 2.0}" rpy="0 0 0" />
+        <collision>
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}"/>
+            </geometry>
+            <origin xyz="0 0 ${base_height / 2.0}" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <!-- ================================================== -->
+    <!-- MACRO PARA CREAR RUEDAS IDÉNTICAS -->
+    <!-- ================================================== -->
+    
+    <xacro:macro name="wheel_link" params="prefix">
+        <link name="${prefix}_wheel_link">
+            <visual>
+                <geometry>
+                    <!-- Rueda como cilindro: radius=radio, length=ancho -->
+                    <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+                </geometry>
+                <!-- Rotación 90° en X para que el cilindro quede vertical -->
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
+                <material name="grey"/>
+            </visual>
+            <!-- Inercia de cilindro para simulación realista -->
+            <xacro:cylinder_inertia m="1.0" r="${2*wheel_radius}" h="${2*wheel_length}" xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
+            <collision>
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
+            </collision>
+        </link>
+    </xacro:macro>
+
+    <!-- ================================================== -->
+    <!-- CREACIÓN DE LAS 4 RUEDAS -->
+    <!-- ================================================== -->
+    
+    <!-- Ruedas delanteras -->
+    <xacro:wheel_link prefix="front_left"/>
+    <xacro:wheel_link prefix="front_right"/>
+    
+    <!-- Ruedas traseras -->  
+    <xacro:wheel_link prefix="rear_left"/>
+    <xacro:wheel_link prefix="rear_right"/>
+
+    <!-- ================================================== -->
+    <!-- JOINTS Y CONEXIONES -->
+    <!-- ================================================== -->
+    
+    <!-- Conexión base_footprint → base_link (fija) -->
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <!-- Posición: base_link elevado al radio de la rueda -->
+        <origin xyz="0 0 0.105" rpy="0 0 0"/>
+    </joint>
+
+    <!-- ================================================== -->
+    <!-- JOINTS DE RUEDAS DELANTERAS (tipo continuous = rotación continua) -->
+    <!-- ================================================== -->
+    
+    <!-- Rueda delantera derecha -->
+    <joint name="base_front_right_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="front_right_wheel_link"/>
+        <!-- Posición: esquina delantera derecha del chasis -->
+        <origin xyz="${wheel_x_offset} ${-wheel_y_offset} ${wheel_z_offset}" rpy="0 0 0"/>
+        <!-- Eje de rotación: Y (ruedas giran alrededor del eje longitudinal) -->
+        <!--axis xyz="0 1 0"/-->
+        <!-- Límites: velocity [rad/s], effort [Nm] -->
+        <!--limit velocity="100" effort="100"/-->
+    </joint>
+
+    <!-- Rueda delantera izquierda -->
+    <joint name="base_front_left_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="front_left_wheel_link"/>
+        <!-- Posición: esquina delantera izquierda del chasis -->
+        <origin xyz="${wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0 0 0"/>
+        <!--axis xyz="0 1 0"/>
+        <limit velocity="100" effort="100"/-->
+    </joint>
+
+    <!-- ================================================== -->
+    <!-- JOINTS DE RUEDAS TRASERAS -->
+    <!-- ================================================== -->
+    
+    <!-- Rueda trasera derecha -->
+    <joint name="base_rear_right_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rear_right_wheel_link"/>
+        <!-- Posición: esquina trasera derecha del chasis -->
+        <origin xyz="${-wheel_x_offset} ${-wheel_y_offset} ${wheel_z_offset}" rpy="0 0 0"/>
+        <!--axis xyz="0 1 0"/>
+        <limit velocity="100" effort="100"/-->
+    </joint>
+
+    <!-- Rueda trasera izquierda -->
+    <joint name="base_rear_left_wheel_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rear_left_wheel_link"/>
+        <!-- Posición: esquina trasera izquierda del chasis -->
+        <origin xyz="${-wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0 0 0"/>
+        <!--axis xyz="0 1 0"/>
+        <limit velocity="100" effort="100"/-->
+    </joint>
+
+</robot>

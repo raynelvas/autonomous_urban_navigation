@@ -1,0 +1,30 @@
+{
+  "camera_height": 0.38,
+  "camera_pitch": 0.087,
+  "camera_pitch_degrees": 10.332,
+
+  "intrinsics": {
+    "fx": 574.1,
+    "fy": 574.1,
+    "cx": 320.0,
+    "cy": 240.0
+  },
+  "calibration_points": [
+    {
+      "Z": 1.5,
+      "v": 464,
+      "u": 290
+    },
+    {
+      "Z": 3.0,
+      "v": 391,
+      "u": 282
+    },
+    {
+      "Z": 5.0,
+      "v": 365,
+      "u": 284
+    }
+  ],
+  "timestamp": 1767911937
+}
